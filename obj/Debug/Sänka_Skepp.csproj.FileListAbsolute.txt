@@ -1,0 +1,9 @@
+C:\Users\NN\source\repos\Sänka_Skepp\Sänka_Skepp\bin\Debug\Sänka_Skepp.exe.config
+C:\Users\NN\source\repos\Sänka_Skepp\Sänka_Skepp\bin\Debug\Sänka_Skepp.exe
+C:\Users\NN\source\repos\Sänka_Skepp\Sänka_Skepp\bin\Debug\Sänka_Skepp.pdb
+C:\Users\NN\source\repos\Sänka_Skepp\Sänka_Skepp\obj\Debug\Sänka_Skepp.csprojAssemblyReference.cache
+C:\Users\NN\source\repos\Sänka_Skepp\Sänka_Skepp\obj\Debug\Sänka_Skepp.Form1.resources
+C:\Users\NN\source\repos\Sänka_Skepp\Sänka_Skepp\obj\Debug\Sänka_Skepp.Properties.Resources.resources
+C:\Users\NN\source\repos\Sänka_Skepp\Sänka_Skepp\obj\Debug\Sänka_Skepp.csproj.GenerateResource.cache
+C:\Users\NN\source\repos\Sänka_Skepp\Sänka_Skepp\obj\Debug\Sänka_Skepp.exe
+C:\Users\NN\source\repos\Sänka_Skepp\Sänka_Skepp\obj\Debug\Sänka_Skepp.pdb

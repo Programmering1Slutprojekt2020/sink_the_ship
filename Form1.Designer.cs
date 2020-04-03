@@ -34,19 +34,22 @@
             // 
             // attack
             // 
-            this.attack.Location = new System.Drawing.Point(36, 35);
+            this.attack.BackColor = System.Drawing.Color.Blue;
+            this.attack.Location = new System.Drawing.Point(27, 12);
             this.attack.Name = "attack";
-            this.attack.Size = new System.Drawing.Size(800, 800);
+            this.attack.Size = new System.Drawing.Size(890, 890);
             this.attack.TabIndex = 0;
             this.attack.Paint += new System.Windows.Forms.PaintEventHandler(this.attack_Paint);
             // 
             // defens
             // 
-            this.defens.Location = new System.Drawing.Point(923, 35);
+            this.defens.BackColor = System.Drawing.Color.Blue;
+            this.defens.Location = new System.Drawing.Point(960, 22);
             this.defens.Name = "defens";
-            this.defens.Size = new System.Drawing.Size(400, 400);
+            this.defens.Size = new System.Drawing.Size(405, 405);
             this.defens.TabIndex = 1;
             this.defens.Paint += new System.Windows.Forms.PaintEventHandler(this.defens_Paint);
+            this.defens.MouseClick += new System.Windows.Forms.MouseEventHandler(this.defens_MouseClick);
             // 
             // Form1
             // 
