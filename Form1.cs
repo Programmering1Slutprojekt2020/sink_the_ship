@@ -19,6 +19,9 @@ namespace Sänka_Skepp
         int turn = 1;
         int runda = 0;
         bool spelarbyte = true;
+        bool valtfärdigt = false;
+        
+
         List<(int, int)> defensXYP1 = new List<(int, int)>();
 
         List<(int, int)> defensXYP2 = new List<(int, int)>();
@@ -30,6 +33,8 @@ namespace Sänka_Skepp
         List<(int, int)> attackXYP1Hit = new List<(int, int)>();
 
         List<(int, int)> attackXYP2Hit = new List<(int, int)>();
+
+        SolidBrush körgrön = new SolidBrush(Color.LightGreen);
 
         public Form1()
         {
@@ -47,6 +52,7 @@ namespace Sänka_Skepp
             SolidBrush mörkblå = new SolidBrush(Color.Blue);
             SolidBrush svart = new SolidBrush(Color.Black);
             SolidBrush mörkareblå = new SolidBrush(Color.DarkBlue);
+            SolidBrush väntaröd = new SolidBrush(Color.OrangeRed);
 
             SolidBrush miss = mörkareblå;
 
@@ -62,71 +68,126 @@ namespace Sänka_Skepp
                 }
             }
 
-
-
-            if (turn == 1)
+            if (!valtfärdigt)
             {
-                foreach ((int x, int y) in attackXYP1miss)
-                {
-                    g.FillEllipse(miss, (110 * x) + 20, (110 * y) + 20, 80, 80);
-
-                }
-
-                foreach ((int x, int y) in attackXYP1Hit)
-                {
-                    g.FillRectangle(svart, (110 * x) + 20, (110 * y) + 20, 80, 80);
-
-                }
-                //turn = 2;
+                g.FillRectangle(väntaröd, 297, 297, 297 ,297);
             }
             else
             {
-                foreach ((int x, int y) in attackXYP2miss)
+                if (spelarbyte)
                 {
-                    g.FillEllipse(miss, (110 * x) + 20, (110 * y) + 20, 80, 80);
+                    g.FillRectangle(körgrön, 297, 297, 297, 297);
 
                 }
-
-                foreach ((int x, int y) in attackXYP2Hit)
+                else
                 {
-                    g.FillRectangle(svart, (110 * x) + 20, (110 * y) + 20, 80, 80);
+                    if (turn == 1)
+                    {
+                        foreach ((int x, int y) in attackXYP1miss)
+                        {
+                            g.FillEllipse(miss, (110 * x) + 20, (110 * y) + 20, 80, 80);
 
+                        }
+
+                        foreach ((int x, int y) in attackXYP1Hit)
+                        {
+                            g.FillRectangle(svart, (110 * x) + 20, (110 * y) + 20, 80, 80);
+
+                        }
+                        //turn = 2;
+                    }
+                    else
+                    {
+                        foreach ((int x, int y) in attackXYP2miss)
+                        {
+                            g.FillEllipse(miss, (110 * x) + 20, (110 * y) + 20, 80, 80);
+
+                        }
+
+                        foreach ((int x, int y) in attackXYP2Hit)
+                        {
+                            g.FillRectangle(svart, (110 * x) + 20, (110 * y) + 20, 80, 80);
+
+                        }
+                        //turn = 1;
+                    }
                 }
-                //turn = 1;
             }
 
         }
 
         private void attack_MouseClick(object sender, MouseEventArgs e)
         {
-            if (turn == 1)
+            if (valtfärdigt)
             {
-                if (defensXYP2.Contains((e.X / 110, e.Y / 110)))
+                if (spelarbyte)
                 {
-                    attackXYP1Hit.Add((e.X / 110, e.Y / 110));
+                    spelarbyte = false;
                     attack.Invalidate();
                 }
                 else
                 {
-                    attackXYP1miss.Add((e.X / 110, e.Y / 110));
-                    attack.Invalidate();
-                }
-                
-            }
+                    if (turn == 1)
+                    {
+                        if ((attackXYP1Hit.Count + attackXYP1miss.Count) < runda)
+                        {
 
-            else
+                            if (defensXYP2.Contains((e.X / 110, e.Y / 110)))
+                            {
+                                attackXYP1Hit.Add((e.X / 110, e.Y / 110));
+
+
+                                attack.Invalidate();
+                            }
+                            else
+                            {
+                                attackXYP1miss.Add((e.X / 110, e.Y / 110));
+                                attack.Invalidate();
+                            }
+                        }
+
+                    }
+
+
+                    else
+                    {
+
+                        if ((attackXYP2Hit.Count + attackXYP2miss.Count +1) < runda)
+                        {
+                            if (defensXYP1.Contains((e.X / 110, e.Y / 110)))
+                            {
+                                attackXYP2Hit.Add((e.X / 110, e.Y / 110));
+                                attack.Invalidate();
+                            }
+                            else
+                            {
+                                attackXYP2miss.Add((e.X / 110, e.Y / 110));
+                                attack.Invalidate();
+                            }
+                        }
+
+                    }
+                }
+            }
+            //p1 vinner
+            if (attackXYP1Hit.Count == defensXYP2.Count)
             {
-                if (defensXYP1.Contains((e.X / 110, e.Y / 110)))
-                {
-                    attackXYP2Hit.Add((e.X / 110, e.Y / 110));
-                    attack.Invalidate();
-                }
-                else
-                {
-                    attackXYP2miss.Add((e.X / 110, e.Y / 110));
-                    attack.Invalidate();
-                }
-                
+
+                attack.Visible = false;
+                defens.Visible = false;
+                Playerturn.Visible = false;
+                färdig.Visible = false;
+                vinnare1.Visible = true;
+            }
+            //p2 vinner
+            if (attackXYP2Hit.Count == defensXYP1.Count)
+            {
+
+                attack.Visible = false;
+                defens.Visible = false;
+                Playerturn.Visible = false;
+                färdig.Visible = false;
+                vinnare2.Visible = true;
             }
         }
 
@@ -136,7 +197,8 @@ namespace Sänka_Skepp
             SolidBrush ljusBlå = new SolidBrush(Color.DodgerBlue);
             SolidBrush mörkblå = new SolidBrush(Color.Blue);
             SolidBrush gråaktig = new SolidBrush(Color.DarkSlateGray);
-            SolidBrush körgrön = new SolidBrush(Color.LightGreen);
+            SolidBrush färdigröd = new SolidBrush(Color.OrangeRed);
+
 
 
             //måla defens-rutorna blåa
@@ -150,32 +212,48 @@ namespace Sänka_Skepp
 
                 }
             }
-
-            //måla sina båtar
-            if (spelarbyte)
+            if (valtfärdigt)
             {
-                g.FillRectangle(körgrön, 105, 105, 195, 195);
-                runda++;
+                g.FillRectangle(färdigröd, 0, 0, 410, 410);
             }
-
             else
             {
-                if (turn == 1)
+
+                if (runda < 2)
                 {
-                    foreach ((int x, int y) in defensXYP1)
+                    //måla sina båtar
+                    if (spelarbyte)
                     {
-                        g.FillRectangle(gråaktig, x * 50 + 5, y * 50 + 5, 45, 45);
+                        g.FillRectangle(körgrön, 105, 105, 195, 195);
 
                     }
+                    else
+                    {
+                        if (turn == 1)
+                        {
+                            foreach ((int x, int y) in defensXYP1)
+                            {
+                                g.FillRectangle(gråaktig, x * 50 + 5, y * 50 + 5, 45, 45);
 
+                            }
+
+                        }
+                        else
+                        {
+                            foreach ((int x, int y) in defensXYP2)
+                            {
+                                g.FillRectangle(gråaktig, x * 50 + 5, y * 50 + 5, 45, 45);
+                            }
+
+                        }
+                        
+                        
+                    }
                 }
                 else
                 {
-                    foreach ((int x, int y) in defensXYP2)
-                    {
-                        g.FillRectangle(gråaktig, x * 50 + 5, y * 50 + 5, 45, 45);
-                    }
-
+                    valtfärdigt = true;
+                    defens.Invalidate();
                 }
             }
 
@@ -184,19 +262,26 @@ namespace Sänka_Skepp
 
         private void defens_MouseClick(object sender, MouseEventArgs e)
         {
+
+            antalSkepp.Visible = false;
+            skeppAllowed.Visible = false;
+
             if (spelarbyte)
             {
                 spelarbyte = false;
                 defens.Invalidate();
             }
 
-            else
+            else 
             {
                 if (turn == 1)
                 {
                     if (!defensXYP1.Contains((e.X / 50, e.Y / 50)))
                     {
-                        defensXYP1.Add((e.X / 50, e.Y / 50));
+                        if (defensXYP1.Count < int.Parse(antalSkepp.Text))
+                        {
+                            defensXYP1.Add((e.X / 50, e.Y / 50));
+                        }
                         defens.Invalidate();
                     }
 
@@ -205,7 +290,10 @@ namespace Sänka_Skepp
                 {
                     if (!defensXYP2.Contains((e.X / 50, e.Y / 50)))
                     {
-                        defensXYP2.Add((e.X / 50, e.Y / 50));
+                        if (defensXYP2.Count < int.Parse(antalSkepp.Text))
+                        {
+                            defensXYP2.Add((e.X / 50, e.Y / 50));
+                        }
                         defens.Invalidate();
                     }
 
@@ -228,7 +316,9 @@ namespace Sänka_Skepp
             }
             Playerturn.Text = "Playerturn: " + turn;
             spelarbyte = true;
+            runda++;
             defens.Invalidate();
+            attack.Invalidate();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -239,6 +329,43 @@ namespace Sänka_Skepp
         private void Playerturn_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void antalSkepp_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void restart_Click(object sender, EventArgs e)
+        {
+            defensXYP1.Clear();
+            defensXYP2.Clear();
+
+            attackXYP1Hit.Clear();
+            attackXYP1miss.Clear();
+
+            attackXYP2Hit.Clear();
+            attackXYP2miss.Clear();
+
+            turn = 1;
+            runda = 0;
+            spelarbyte = true;
+            valtfärdigt = false;
+
+            attack.Visible = true;
+            defens.Visible = true;
+            Playerturn.Visible = true;
+            färdig.Visible = true;
+            vinnare2.Visible = false;
+            vinnare1.Visible = false;
+
+            attack.Invalidate();
+            defens.Invalidate();
         }
     }
 }
