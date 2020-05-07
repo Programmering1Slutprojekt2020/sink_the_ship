@@ -70,6 +70,7 @@
             this.färdig.TabIndex = 3;
             this.färdig.Text = "Färdig!";
             this.färdig.UseVisualStyleBackColor = true;
+            this.färdig.Visible = false;
             this.färdig.Click += new System.EventHandler(this.färdig_Click);
             // 
             // Playerturn

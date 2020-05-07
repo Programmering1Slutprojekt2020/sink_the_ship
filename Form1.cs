@@ -21,6 +21,7 @@ namespace Sänka_Skepp
         bool spelarbyte = true;
         bool valtfärdigt = false;
         
+        
 
         List<(int, int)> defensXYP1 = new List<(int, int)>();
 
@@ -65,6 +66,7 @@ namespace Sänka_Skepp
 
                     g.FillRectangle(ljusBlå, (110 * i)+ 10, (110 * k) + 10, 100, 100);
 
+                    //nice
                 }
             }
 
@@ -282,6 +284,10 @@ namespace Sänka_Skepp
                         {
                             defensXYP1.Add((e.X / 50, e.Y / 50));
                         }
+                        if (defensXYP1.Count == int.Parse(antalSkepp.Text))
+                        {
+                            färdig.Visible = true;
+                        }
                         defens.Invalidate();
                     }
 
@@ -360,9 +366,10 @@ namespace Sänka_Skepp
             attack.Visible = true;
             defens.Visible = true;
             Playerturn.Visible = true;
-            färdig.Visible = true;
             vinnare2.Visible = false;
             vinnare1.Visible = false;
+            antalSkepp.Visible = true;
+            färdig.Visible = false;
 
             attack.Invalidate();
             defens.Invalidate();
