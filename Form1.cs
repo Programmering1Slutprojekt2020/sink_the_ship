@@ -70,6 +70,7 @@ namespace Sänka_Skepp
                 }
             }
 
+            //kollar om man ska disablea attackmöjligheten
             if (!valtfärdigt)
             {
                 g.FillRectangle(väntaröd, 297, 297, 297 ,297);
@@ -120,8 +121,10 @@ namespace Sänka_Skepp
 
         private void attack_MouseClick(object sender, MouseEventArgs e)
         {
+            //är skepsplaceringen färdig?
             if (valtfärdigt)
             {
+                //ska grön ruta visas för spelarbyte?
                 if (spelarbyte)
                 {
                     spelarbyte = false;
@@ -133,7 +136,7 @@ namespace Sänka_Skepp
                     {
                         if ((attackXYP1Hit.Count + attackXYP1miss.Count) < runda)
                         {
-
+                            //lägg till antingen träff eller miss på listan med datan
                             if (defensXYP2.Contains((e.X / 110, e.Y / 110)))
                             {
                                 attackXYP1Hit.Add((e.X / 110, e.Y / 110));
@@ -150,10 +153,10 @@ namespace Sänka_Skepp
 
                     }
 
-
+                    //andra spelaren
                     else
                     {
-
+                        //lägg till antingen träff eller miss på listan med datan
                         if ((attackXYP2Hit.Count + attackXYP2miss.Count +1) < runda)
                         {
                             if (defensXYP1.Contains((e.X / 110, e.Y / 110)))
@@ -214,6 +217,8 @@ namespace Sänka_Skepp
 
                 }
             }
+
+            //disablea möjligheten att placera sina skepp
             if (valtfärdigt)
             {
                 g.FillRectangle(färdigröd, 0, 0, 410, 410);
@@ -265,15 +270,18 @@ namespace Sänka_Skepp
         private void defens_MouseClick(object sender, MouseEventArgs e)
         {
 
+            //gömmer valmöjligheten för skeppmängd
             antalSkepp.Visible = false;
             skeppAllowed.Visible = false;
 
+            //kollar om det ska visa grön ruta
             if (spelarbyte)
             {
                 spelarbyte = false;
                 defens.Invalidate();
             }
 
+            //lägger till data för utlaggda skepp
             else 
             {
                 if (turn == 1)
@@ -292,6 +300,7 @@ namespace Sänka_Skepp
                     }
 
                 }
+                //och samma för spelare 2
                 else
                 {
                     if (!defensXYP2.Contains((e.X / 50, e.Y / 50)))
@@ -312,6 +321,7 @@ namespace Sänka_Skepp
 
         private void färdig_Click(object sender, EventArgs e)
         {
+            //registrerar om man är färdig och påverkar så spelet
             if (turn == 1)
             {
                 turn = 2;
@@ -349,6 +359,7 @@ namespace Sänka_Skepp
 
         private void restart_Click(object sender, EventArgs e)
         {
+            //göm det som fanns och visa det som behövs
             defensXYP1.Clear();
             defensXYP2.Clear();
 
